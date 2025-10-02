@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #90A1B9;
+  --color-white: #F8FAFC;
+  --color-purple: #615FFF;
+  --color-green: #00D5BE;
+  --color-red: #FFA1AD;
+  --color-orange: #FFB86A;
+  --color-gray: #314158;
+}
+
+:root {
+  --background: #020618;
+  --text-base-color: var(--color-primary); 
+}
+
+body {
+  background: var(--background);
+  color: var(--color-primary);
+}
+
+.active {
+  border-bottom: #FFB86A 2px solid;
+}
