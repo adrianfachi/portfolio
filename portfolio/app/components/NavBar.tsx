@@ -32,7 +32,7 @@ function NavBar({ active }: props) {
 			</div>
 
 			<div className="hidden md:flex gap-16 w-full h-8 border-b-gray text-primary text-xs border-b">
-				<p className="text-nowrap pl-6 flex items-center h-full">
+				<p className="text-nowrap pl-6 flex items-center">
 					adrian-fachi
 				</p>
 
@@ -99,7 +99,7 @@ function NavBar({ active }: props) {
 				/>
 			)}
 			<div className="border-b-gray text-primary text-xs border-b pl-6 h-8 flex items-center gap-16 md:hidden">
-				<p className="text-nowrap">adrian-fachi</p>
+				<p className="media2">adrian-fachi</p>
 			</div>
 		</div>
 	);

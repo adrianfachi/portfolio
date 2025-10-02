@@ -8,18 +8,48 @@
   --color-red: #FFA1AD;
   --color-orange: #FFB86A;
   --color-gray: #314158;
-}
-
-:root {
   --background: #020618;
   --text-base-color: var(--color-primary); 
 }
 
 body {
-  background: var(--background);
+  background-image: repeating-linear-gradient(
+    90deg,
+    #9f9f9f08 0px,
+    #9F9F9F08 50px,
+    #020618 50px,
+    #020618 80px
+  );
+  background-color: #020618;
   color: var(--color-primary);
+}
+
+.background-stripes, body {
+  background-size: 960px 100%; 
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.background-stripes {
+  background-image: repeating-linear-gradient(
+    90deg,
+    #9f9f9f08 0px,
+    #9F9F9F08 50px,
+    #0F172B 50px,
+    #0F172B 80px
+  );
 }
 
 .active {
   border-bottom: #FFB86A 2px solid;
+}
+
+@media (max-width: 320px) {
+  .media {
+    justify-content: center;
+  }
+
+  .media2 {
+    display: none;
+  }
 }
