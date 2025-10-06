@@ -44,6 +44,18 @@ body {
   border-bottom: #FFB86A 2px solid;
 }
 
+.scroll-style::-webkit-scrollbar {
+  height: 2px;
+}
+
+.scroll-style::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray);
+}
+
+.scroll-style::-webkit-scrollbar-corner {
+  display: block;
+}
+
 @media (max-width: 320px) {
   .media {
     justify-content: center;

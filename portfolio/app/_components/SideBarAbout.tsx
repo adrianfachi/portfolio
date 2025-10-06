@@ -5,13 +5,19 @@ import { GrContactInfo } from "react-icons/gr";
 import { FaGamepad } from "react-icons/fa";
 import { MdEmail, MdPhone } from "react-icons/md";
 import { TbFileTypeTxt } from "react-icons/tb";
-import { useEffect, useState } from "react";
-import linguagens from "../_data/linguagens";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import linguagens from "../_lib/linguagens";
 import TitleSideBar from "./TitleSideBar";
-import infoSideBar from "../_data/infoSideBar";
+import infoSideBar from "../_lib/infoSideBar";
 import FolderSideBar from "./FolderSideBar";
 
-function SideBarAbout() {
+type props = {
+	setActiveTabs: Dispatch<SetStateAction<string[]>>;
+	setActiveTab: Dispatch<string>;
+	setLastActiveTab: (tab: string) => void;
+};
+
+function SideBarAbout({ setActiveTabs, setActiveTab, setLastActiveTab }: props) {
 	const [checked, setChecked] = useState<string>("professional-info");
 	const [isPC, setIsPC] = useState(false);
 
@@ -27,6 +33,7 @@ function SideBarAbout() {
 			window.removeEventListener("resize", handleResize);
 		};
 	}, []);
+
 	const [checkedPRI, setCheckedPRI] = useState<boolean>(isPC);
 	const [checkedPEI, setCheckedPEI] = useState<boolean>(isPC);
 	const [checkedHO, setCheckedHO] = useState<boolean>(isPC);
@@ -53,7 +60,7 @@ function SideBarAbout() {
 
 	return (
 		<div
-			className={`flex flex-col text-primary w-screen select-none md:flex-row md:w-fit`}
+			className={`flex flex-col text-primary w-full select-none md:flex-row md:w-fit`}
 		>
 			<div className="flex p-4 gap-4 text-primary w-full border-b border-b-gray justify-center md:flex-col md:border-r md:border-r-gray md:w-fit md:justify-start">
 				<HiOutlineCode
@@ -123,7 +130,7 @@ function SideBarAbout() {
 								}`}
 							>
 								{linguagens.map(({ nome, Logo, cor }) => (
-									<div key={nome} className="flex items-center ml-2 gap-1">
+									<div key={nome} className="flex items-center ml-2 gap-1	">
 										<Logo color={cor} fontSize={20} />
 										<span className="text-sm">{nome}</span>
 									</div>
@@ -149,7 +156,13 @@ function SideBarAbout() {
 							>
 								{infoSideBar.estudos.map((e) => {
 									return (
-										<div key={e} className="flex items-center ml-2 gap-1">
+										<div key={e} className="flex items-center ml-2 gap-1 cursor-pointer" onClick={() => {
+										setActiveTabs((prev) => 
+											prev.includes(e) ? prev : [...prev, e]
+										)
+										setActiveTab(e);
+										setLastActiveTab(e);
+									}}>
 											<TbFileTypeTxt fontSize={20} />
 											<span className="text-sm">{e}</span>
 										</div>
@@ -195,9 +208,15 @@ function SideBarAbout() {
 									checkedBIO ? "" : "hidden"
 								}`}
 							>
-								<div className="flex items-center ml-2 gap-1">
+								<div className="flex items-center ml-2 gap-1 cursor-pointer" onClick={() => {
+										setActiveTabs((prev) => 
+											prev.includes("Minha bio") ? prev : [...prev, "Minha bio"]
+										)
+										setActiveTab("Minha bio");
+										setLastActiveTab("Minha bio");
+									}}>
 									<TbFileTypeTxt fontSize={20} />
-									<span className="text-sm">minha bio</span>
+									<span className="text-sm">Minha bio</span>
 								</div>
 							</div>
 							<div
@@ -222,7 +241,13 @@ function SideBarAbout() {
 							>
 								{infoSideBar.interesses.map((e) => {
 									return (
-										<div key={e} className="flex items-center ml-2 gap-1">
+										<div key={e} className="flex items-center ml-2 gap-1 cursor-pointer" onClick={() => {
+											setActiveTabs((prev) => 
+												prev.includes(e) ? prev : [...prev, e]
+											)
+											setActiveTab(e);
+											setLastActiveTab(e);
+										}}>
 											<TbFileTypeTxt fontSize={20} />
 											<span className="text-sm">{e}</span>
 										</div>
@@ -251,7 +276,13 @@ function SideBarAbout() {
 							>
 								{infoSideBar.educacao.map((e) => {
 									return (
-										<div key={e} className="flex items-center ml-2 gap-1">
+										<div key={e} className="flex items-center ml-2 gap-1 cursor-pointer" onClick={() => {
+											setActiveTabs((prev) => 
+												prev.includes(e) ? prev : [...prev, e]
+											)
+											setActiveTab(e);
+											setLastActiveTab(e);
+										}}>
 											<TbFileTypeTxt fontSize={20} />
 											<span className="text-sm">{e}</span>
 										</div>
@@ -301,7 +332,13 @@ function SideBarAbout() {
 							>
 								{infoSideBar.hobbies.map((e) => {
 									return (
-										<div key={e} className="flex items-center ml-2 gap-1">
+										<div key={e} className="flex items-center ml-2 gap-1 cursor-pointer" onClick={() => {
+											setActiveTabs((prev) => 
+												prev.includes(e) ? prev : [...prev, e]
+											)
+											setActiveTab(e);
+											setLastActiveTab(e);
+										}}>
 											<TbFileTypeTxt fontSize={20} />
 											<span className="text-sm">{e}</span>
 										</div>
