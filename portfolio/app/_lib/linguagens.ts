@@ -1,8 +1,9 @@
+import { IconType } from "react-icons";
 import { BiLogoTypescript, BiLogoTailwindCss, BiLogoHtml5, BiLogoCss3, BiLogoJavascript, BiLogoJava, BiLogoReact } from "react-icons/bi";
 
 type Linguagem = {
   nome: string;
-  Logo: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  Logo: IconType;
   cor: string;
 };
 

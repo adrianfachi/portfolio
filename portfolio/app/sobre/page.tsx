@@ -13,6 +13,7 @@ export default function About() {
   const [activeTabs, setActiveTabs] = useState<string[]>(["Minha bio"]);
   const [activeTab, setActiveTab] = useState<string>("Minha bio")
   const [lastActiveTab, setLastActiveTab] = useState<string>("")
+  const [activeMenu, setActiveMenu] = useState<boolean>(false)
 
  const handleCloseTab = (index: number) => {
   setActiveTabs((prev) => {
@@ -36,7 +37,9 @@ export default function About() {
 
   return (
     <Body>
-       <NavBar active="sobre"/>
+       <NavBar active="sobre" setActiveBoolean={setActiveMenu}/>
+       {activeMenu ? 
+       <>
        <div className="flex-grow flex flex-col h-full w-full md:flex-row">
         <SideBarAbout setActiveTabs={setActiveTabs} setActiveTab={setActiveTab} setLastActiveTab={setLastActiveTab}/>
         <div className="flex flex-col max-w-full min-w-0 w-full">
@@ -67,6 +70,8 @@ export default function About() {
         </div>
        </div>
        <Footer/>
+       </>
+       : null}
     </Body>
   );
 }

@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 
 type Props = {
@@ -17,12 +16,10 @@ function TabsAbout({ tabs, onClose, onOpen, activeTab, setLastActiveTab }: Props
                     <div
                         key={index}
                         className={
-                            // O `div` da tab é `shrink-0` (OK)
                             `flex gap-2 items-center text-sm border-r border-r-gray py-[7px] px-4 cursor-pointer shrink-0 ${activeTab == tab ? "active" : ""}` 
                         }
                     >
                         <p
-                            // ADICIONE shrink-0 aqui!
                             className="shrink-0" 
                             onClick={() => {
                                 onOpen(tab);

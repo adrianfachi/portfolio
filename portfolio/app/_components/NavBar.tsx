@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import Link from "next/link";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 
 type props = {
 	active: string;
+	setActiveBoolean: Dispatch<SetStateAction<boolean>>
 };
 
 // Dados dos links para simplificar a manutenção
@@ -15,15 +16,21 @@ const menuItems = [
 	{ href: "/projetos", label: "_projetos", key: "projetos" },
 ];
 
-function NavBar({ active }: props) {
+function NavBar({ active, setActiveBoolean }: props) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const handleLinkClick = () => setIsMenuOpen(false);
+	const handleLinkClick = () => {
+		setIsMenuOpen(false);
+		setActiveBoolean(false);
+	};
 
 	return (
 		<div className="relative">
 			<div className="absolute flex top-1/2 -translate-y-1/2 right-4 z-50 md:hidden">
 				<button
-					onClick={() => setIsMenuOpen(!isMenuOpen)}
+					onClick={() => {
+						setIsMenuOpen(!isMenuOpen);
+						setActiveBoolean(isMenuOpen)
+					}}
 					className="text-primary hover:text-purple transition"
 					aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
 				>
@@ -63,7 +70,7 @@ function NavBar({ active }: props) {
 
 			<div
 				className={`fixed top-0 left-0 h-screen w-full bg-background z-40 transform transition-transform duration-300 ease-in-out ${
-					isMenuOpen ? "translate-x-0" : "-translate-x-full"
+					isMenuOpen ? "translate-y-0" : "-translate-y-full"
 				} md:hidden`}
 			>
 				<div className="flex flex-col pt-16 m-4">
@@ -94,7 +101,7 @@ function NavBar({ active }: props) {
 
 			{isMenuOpen && (
 				<div
-					className="fixed inset-0 bg-[#0F172B] z-30 md:hidden m-4 mt-12 border border-gray rounded-b-lg"
+					className="fixed inset-0 background-stripes bg-[#0F172B] z-30 md:hidden m-4 mt-12 border border-gray rounded-b-lg"
 					onClick={handleLinkClick}
 				/>
 			)}
