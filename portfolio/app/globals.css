@@ -8,6 +8,7 @@
   --color-red: #FFA1AD;
   --color-orange: #FFB86A;
   --color-gray: #314158;
+  --color-pink: #C27AFF;
   --background: #020618;
   --text-base-color: var(--color-primary); 
 }
@@ -46,6 +47,7 @@ body {
 
 .scroll-style::-webkit-scrollbar {
   height: 2px;
+  width: 5px;
 }
 
 .scroll-style::-webkit-scrollbar-thumb {

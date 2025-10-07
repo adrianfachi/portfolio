@@ -20,6 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br" className={`${firaCode.className} antialiased`}>
+      <head>
+        <link rel="icon" href="AF.png" />
+      </head>
       <body>
         {children}
       </body>

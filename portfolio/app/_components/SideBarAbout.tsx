@@ -4,12 +4,12 @@ import { HiOutlineCode } from "react-icons/hi";
 import { GrContactInfo } from "react-icons/gr";
 import { FaGamepad } from "react-icons/fa";
 import { MdEmail, MdPhone } from "react-icons/md";
-import { TbFileTypeTxt } from "react-icons/tb";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import linguagens from "../_lib/linguagens";
 import TitleSideBar from "./TitleSideBar";
 import infoSideBar from "../_lib/infoSideBar";
 import FolderSideBar from "./FolderSideBar";
+import SideBarElementTxt from "./SideBarElementTxt";
 
 type props = {
 	setActiveTabs: Dispatch<SetStateAction<string[]>>;
@@ -17,9 +17,15 @@ type props = {
 	setLastActiveTab: (tab: string) => void;
 };
 
-function SideBarAbout({ setActiveTabs, setActiveTab, setLastActiveTab }: props) {
+function SideBarAbout({
+	setActiveTabs,
+	setActiveTab,
+	setLastActiveTab,
+}: props) {
 	const [checked, setChecked] = useState<string>("professional-info");
 	const [isPC, setIsPC] = useState(false);
+	const infoInputs = ["professional-info", "personal-info", "hobbies"];
+	const iconsInfoInputs = [HiOutlineCode, GrContactInfo, FaGamepad];
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -63,33 +69,19 @@ function SideBarAbout({ setActiveTabs, setActiveTab, setLastActiveTab }: props) 
 			className={`flex flex-col text-primary w-full select-none md:flex-row md:w-fit`}
 		>
 			<div className="flex p-4 gap-4 text-primary w-full border-b border-b-gray justify-center md:flex-col md:border-r md:border-r-gray md:w-fit md:justify-start">
-				<HiOutlineCode
-					className={`${
-						checked == "professional-info" ? "text-white" : ""
-					} cursor-pointer`}
-					size={20}
-					onClick={() => {
-						setChecked("professional-info");
-					}}
-				/>
-				<GrContactInfo
-					className={`${
-						checked == "personal-info" ? "text-white" : ""
-					} cursor-pointer`}
-					size={20}
-					onClick={() => {
-						setChecked("personal-info");
-					}}
-				/>
-				<FaGamepad
-					className={`${
-						checked == "hobbies" ? "text-white" : ""
-					} cursor-pointer`}
-					size={20}
-					onClick={() => {
-						setChecked("hobbies");
-					}}
-				/>
+				{infoInputs.map((e, index) => {
+					const Icon = iconsInfoInputs[index];
+					return (
+						<Icon
+							key={index}
+							className={`${checked == e ? "text-white" : ""} cursor-pointer`}
+							size={20}
+							onClick={() => {
+								setChecked(e);
+							}}
+						/>
+					);
+				})}
 			</div>
 			<div className="flex flex-col text-primary md:border-r md:border-r-gray w-full md:w-fit">
 				{checked == "professional-info" ? (
@@ -154,18 +146,15 @@ function SideBarAbout({ setActiveTabs, setActiveTab, setLastActiveTab }: props) 
 									checkedES ? "" : "hidden"
 								}`}
 							>
-								{infoSideBar.estudos.map((e) => {
+								{infoSideBar.estudos.map((e, index) => {
 									return (
-										<div key={e} className="flex items-center ml-2 gap-1 cursor-pointer" onClick={() => {
-										setActiveTabs((prev) => 
-											prev.includes(e) ? prev : [...prev, e]
-										)
-										setActiveTab(e);
-										setLastActiveTab(e);
-									}}>
-											<TbFileTypeTxt fontSize={20} />
-											<span className="text-sm">{e}</span>
-										</div>
+										<SideBarElementTxt
+											key={index}
+											setActiveTab={setActiveTab}
+											setActiveTabs={setActiveTabs}
+											setLastActiveTab={setLastActiveTab}
+											element={e}
+										/>
 									);
 								})}
 							</div>
@@ -208,16 +197,12 @@ function SideBarAbout({ setActiveTabs, setActiveTab, setLastActiveTab }: props) 
 									checkedBIO ? "" : "hidden"
 								}`}
 							>
-								<div className="flex items-center ml-2 gap-1 cursor-pointer" onClick={() => {
-										setActiveTabs((prev) => 
-											prev.includes("Minha bio") ? prev : [...prev, "Minha bio"]
-										)
-										setActiveTab("Minha bio");
-										setLastActiveTab("Minha bio");
-									}}>
-									<TbFileTypeTxt fontSize={20} />
-									<span className="text-sm">Minha bio</span>
-								</div>
+								<SideBarElementTxt
+									setActiveTab={setActiveTab}
+									setActiveTabs={setActiveTabs}
+									setLastActiveTab={setLastActiveTab}
+									element={"Minha bio"}
+								/>
 							</div>
 							<div
 								onClick={() => {
@@ -239,18 +224,15 @@ function SideBarAbout({ setActiveTabs, setActiveTab, setLastActiveTab }: props) 
 									checkedINT ? "" : "hidden"
 								}`}
 							>
-								{infoSideBar.interesses.map((e) => {
+								{infoSideBar.interesses.map((e, index) => {
 									return (
-										<div key={e} className="flex items-center ml-2 gap-1 cursor-pointer" onClick={() => {
-											setActiveTabs((prev) => 
-												prev.includes(e) ? prev : [...prev, e]
-											)
-											setActiveTab(e);
-											setLastActiveTab(e);
-										}}>
-											<TbFileTypeTxt fontSize={20} />
-											<span className="text-sm">{e}</span>
-										</div>
+										<SideBarElementTxt
+											key={index}
+											setActiveTab={setActiveTab}
+											setActiveTabs={setActiveTabs}
+											setLastActiveTab={setLastActiveTab}
+											element={e}
+										/>
 									);
 								})}
 							</div>
@@ -274,18 +256,15 @@ function SideBarAbout({ setActiveTabs, setActiveTab, setLastActiveTab }: props) 
 									checkedEDU ? "" : "hidden"
 								}`}
 							>
-								{infoSideBar.educacao.map((e) => {
+								{infoSideBar.educacao.map((e, index) => {
 									return (
-										<div key={e} className="flex items-center ml-2 gap-1 cursor-pointer" onClick={() => {
-											setActiveTabs((prev) => 
-												prev.includes(e) ? prev : [...prev, e]
-											)
-											setActiveTab(e);
-											setLastActiveTab(e);
-										}}>
-											<TbFileTypeTxt fontSize={20} />
-											<span className="text-sm">{e}</span>
-										</div>
+										<SideBarElementTxt
+											key={index}
+											setActiveTab={setActiveTab}
+											setActiveTabs={setActiveTabs}
+											setLastActiveTab={setLastActiveTab}
+											element={e}
+										/>
 									);
 								})}
 							</div>
@@ -296,7 +275,7 @@ function SideBarAbout({ setActiveTabs, setActiveTab, setLastActiveTab }: props) 
 						<div
 							className="p-2 border-b border-b-gray gap-2"
 							onClick={() => {
-								setCheckedPEI(!checkedHO);
+								setCheckedHO(!checkedHO);
 							}}
 						>
 							<TitleSideBar
@@ -330,18 +309,15 @@ function SideBarAbout({ setActiveTabs, setActiveTab, setLastActiveTab }: props) 
 									checkedHOF ? "" : "hidden"
 								}`}
 							>
-								{infoSideBar.hobbies.map((e) => {
+								{infoSideBar.hobbies.map((e, index) => {
 									return (
-										<div key={e} className="flex items-center ml-2 gap-1 cursor-pointer" onClick={() => {
-											setActiveTabs((prev) => 
-												prev.includes(e) ? prev : [...prev, e]
-											)
-											setActiveTab(e);
-											setLastActiveTab(e);
-										}}>
-											<TbFileTypeTxt fontSize={20} />
-											<span className="text-sm">{e}</span>
-										</div>
+										<SideBarElementTxt
+											key={index}
+											setActiveTab={setActiveTab}
+											setActiveTabs={setActiveTabs}
+											setLastActiveTab={setLastActiveTab}
+											element={e}
+										/>
 									);
 								})}
 							</div>
