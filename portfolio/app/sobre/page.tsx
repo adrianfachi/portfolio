@@ -38,7 +38,7 @@ export default function About() {
   return (
     <Body>
        <NavBar active="sobre" setActiveBoolean={setActiveMenu}/>
-       {activeMenu ? 
+       {!activeMenu ? 
        <>
        <div className="flex-grow flex flex-col h-full w-full md:flex-row">
         <SideBarAbout setActiveTabs={setActiveTabs} setActiveTab={setActiveTab} setLastActiveTab={setLastActiveTab}/>

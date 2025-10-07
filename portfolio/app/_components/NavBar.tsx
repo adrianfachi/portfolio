@@ -29,7 +29,7 @@ function NavBar({ active, setActiveBoolean }: props) {
 				<button
 					onClick={() => {
 						setIsMenuOpen(!isMenuOpen);
-						setActiveBoolean(isMenuOpen)
+						setActiveBoolean(!isMenuOpen)
 					}}
 					className="text-primary hover:text-purple transition"
 					aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
