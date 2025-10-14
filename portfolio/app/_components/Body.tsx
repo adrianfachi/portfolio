@@ -1,13 +1,35 @@
-import React from 'react'
+"use client";
+
+import { useEffect, useState } from "react";
+import NavBar from "./NavBar";
+import Footer from "./Footer";
 
 type Props = {
-    children: React.ReactNode;
-}
+  children: React.ReactNode;
+  navBarActive: string;
+};
 
-function Body({children}: Props) {
+function Body({ children, navBarActive }: Props) {
+  const [activeMenu, setActiveMenu] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (activeMenu) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [activeMenu]);
+
   return (
-    <div className="m-4 border-gray border text-primary rounded-lg min-h-[calc(100vh-2rem)] bg-[#0F172B] flex flex-col background-stripes md:m-12 md:min-h-[calc(100vh-6rem)]">{children}</div>
-  )
+    <div className="m-4 border-gray border text-primary rounded-lg min-h-[calc(100vh-2rem)] bg-[#0F172B] flex flex-col background-stripes md:m-12 md:min-h-[calc(100vh-6rem)]">
+      <NavBar active={navBarActive} setActiveBoolean={setActiveMenu} />
+      {children}
+      <Footer />
+    </div>
+  );
 }
 
-export default Body
+export default Body;

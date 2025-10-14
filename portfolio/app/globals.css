@@ -1,23 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #90A1B9;
-  --color-white: #F8FAFC;
-  --color-purple: #615FFF;
-  --color-green: #00D5BE;
-  --color-red: #FFA1AD;
-  --color-orange: #FFB86A;
+  --color-primary: #90a1b9;
+  --color-white: #f8fafc;
+  --color-purple: #615fff;
+  --color-green: #00d5be;
+  --color-red: #ffa1ad;
+  --color-orange: #ffb86a;
   --color-gray: #314158;
-  --color-pink: #C27AFF;
+  --color-pink: #c27aff;
   --background: #020618;
-  --text-base-color: var(--color-primary); 
+  --text-base-color: var(--color-primary);
 }
 
 body {
   background-image: repeating-linear-gradient(
     90deg,
     #9f9f9f08 0px,
-    #9F9F9F08 50px,
+    #9f9f9f08 50px,
     #020618 50px,
     #020618 80px
   );
@@ -25,8 +25,9 @@ body {
   color: var(--color-primary);
 }
 
-.background-stripes, body {
-  background-size: 960px 100%; 
+.background-stripes,
+body {
+  background-size: 960px 100%;
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -35,14 +36,10 @@ body {
   background-image: repeating-linear-gradient(
     90deg,
     #9f9f9f08 0px,
-    #9F9F9F08 50px,
-    #0F172B 50px,
-    #0F172B 80px
+    #9f9f9f08 50px,
+    #0f172b 50px,
+    #0f172b 80px
   );
-}
-
-.active {
-  border-bottom: #FFB86A 2px solid;
 }
 
 .scroll-style::-webkit-scrollbar {

@@ -1,5 +1,13 @@
 import { IconType } from "react-icons";
-import { BiLogoTypescript, BiLogoTailwindCss, BiLogoHtml5, BiLogoCss3, BiLogoJavascript, BiLogoJava, BiLogoReact } from "react-icons/bi";
+import {
+  BiLogoTypescript,
+  BiLogoTailwindCss,
+  BiLogoHtml5,
+  BiLogoCss3,
+  BiLogoJavascript,
+  BiLogoJava,
+  BiLogoReact,
+} from "react-icons/bi";
 import { TbBrandNextjs } from "react-icons/tb";
 
 type Linguagem = {
@@ -16,7 +24,7 @@ const linguagens: Linguagem[] = [
   { nome: "TypeScript", Logo: BiLogoTypescript, cor: "#007ACC" },
   { nome: "React", Logo: BiLogoReact, cor: "#61DAFB" },
   { nome: "Tailwind", Logo: BiLogoTailwindCss, cor: "#06B6D4" },
-  { nome: "Next.JS", Logo: TbBrandNextjs, cor: "#000"},
+  { nome: "Next.JS", Logo: TbBrandNextjs, cor: "#000" },
   { nome: "Java", Logo: BiLogoJava, cor: "#F89820" },
 ];
 
