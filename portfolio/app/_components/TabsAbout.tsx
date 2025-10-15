@@ -1,4 +1,5 @@
 import { IoMdClose } from "react-icons/io";
+import { motion } from "framer-motion";
 
 type Props = {
   tabs: string[];
@@ -21,9 +22,7 @@ function TabsAbout({
         return (
           <div
             key={index}
-            className={`flex gap-2 items-center text-sm border-r border-r-gray py-[7px] px-4 cursor-pointer shrink-0 ${
-              activeTab == tab ? "active" : ""
-            }`}
+            className={`flex gap-2 items-center text-sm border-r border-r-gray py-[7px] px-4 cursor-pointer shrink-0 relative`}
           >
             <p
               className="shrink-0"
@@ -40,6 +39,18 @@ function TabsAbout({
               }}
               className="text-nowrap shrink-0"
             />
+            {activeTab === tab && (
+              <motion.div
+                key={tab}
+                layoutId="underlineAbout"
+                className="absolute left-0 bottom-0 h-[1px] w-full bg-orange rounded"
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 20,
+                }}
+              />
+            )}
           </div>
         );
       })}

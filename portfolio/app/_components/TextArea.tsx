@@ -1,23 +1,48 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-type props = {
+type Props = {
   text: string;
   title: string;
+  animateTypewriter?: boolean;
 };
 
-export default function TextArea({ title, text }: props) {
+export default function TextArea({ title, text, animateTypewriter }: Props) {
   const textContentRef = useRef<HTMLDivElement>(null);
   const [lineCount, setLineCount] = useState(1);
+  const [displayedText, setDisplayedText] = useState("");
+  const timeouts = useRef<NodeJS.Timeout[]>([]);
+
+  useEffect(() => {
+    timeouts.current.forEach((t) => clearTimeout(t));
+    timeouts.current = [];
+
+    if (animateTypewriter) {
+      setDisplayedText(text);
+      return;
+    }
+
+    setDisplayedText("");
+    const chars = Array.from(text);
+
+    chars.forEach((char, i) => {
+      const timeout = setTimeout(() => {
+        setDisplayedText((prev) => prev + char);
+      }, i * 10);
+      timeouts.current.push(timeout);
+    });
+
+    return () => {
+      timeouts.current.forEach((t) => clearTimeout(t));
+      timeouts.current = [];
+    };
+  }, [text, animateTypewriter]);
 
   const computeLines = () => {
     const el = textContentRef.current;
     if (!el) return;
-
     const style = window.getComputedStyle(el);
-    const lineHeightUnit = style.lineHeight;
-    const lineHeight = parseFloat(lineHeightUnit);
-
+    const lineHeight = parseFloat(style.lineHeight);
     if (isNaN(lineHeight) || lineHeight === 0) {
       setLineCount(1);
       return;
@@ -29,14 +54,15 @@ export default function TextArea({ title, text }: props) {
 
   useEffect(() => {
     computeLines();
-
     const handleResize = () => computeLines();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [text]);
+  }, [displayedText]);
 
   return (
-    <div className="flex text-sm w-full text-primary p-2">
+    <div
+      className="flex text-sm w-full text-primary p-2"
+    >
       <div className="flex items-end flex-col px-2 select-none">
         {Array.from({ length: lineCount + 1 }, (_, i) => (
           <div key={i} className="flex gap-4" style={{ lineHeight: "1.5rem" }}>
@@ -44,10 +70,11 @@ export default function TextArea({ title, text }: props) {
           </div>
         ))}
       </div>
+
       <div className="flex items-end flex-col px-2 select-none">
         {Array.from({ length: lineCount + 1 }, (_, i) => (
           <div key={i} className="flex gap-4" style={{ lineHeight: "1.5rem" }}>
-            <p>{i == 0 ? "/**" : i == lineCount ? "*/" : "*"}</p>
+            <p>{i === 0 ? "/**" : i === lineCount ? "*/" : "*"}</p>
           </div>
         ))}
       </div>
@@ -56,10 +83,10 @@ export default function TextArea({ title, text }: props) {
         <div
           ref={textContentRef}
           style={{ lineHeight: "1.5rem" }}
-          className="pt-6"
+          className="pt-6 whitespace-pre-wrap"
         >
           <h1>{title}</h1>
-          {text}
+          {displayedText}
         </div>
       </div>
     </div>

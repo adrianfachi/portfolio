@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Body from "../_components/Body";
 import SideBarAbout from "../_components/SideBarAbout";
 import TabsAbout from "../_components/TabsAbout";
@@ -61,6 +61,18 @@ export default function About() {
   };
 
   const currentContent = tabContent[activeTab];
+  const [shouldAnimate, setShouldAnimate] = useState<boolean>();
+
+  const animatedTabs = useRef<Set<string>>(new Set());
+  useEffect(() => {
+    setShouldAnimate(currentContent && !animatedTabs.current.has(currentContent.title))
+    if (currentContent && shouldAnimate) {
+      animatedTabs.current.add(currentContent.title);
+    }
+    console.log(animatedTabs)
+  }, [currentContent])
+
+
 
   return (
     <Body navBarActive="sobre">
@@ -81,7 +93,7 @@ export default function About() {
           />
 
           {currentContent && (
-            <TextArea title={currentContent.title} text={currentContent.text} />
+            <TextArea title={currentContent.title} text={currentContent.text} animateTypewriter={!shouldAnimate} />
           )}
         </div>
       </div>

@@ -13,10 +13,10 @@ function Project({ number, name, image, caption, link }: Props) {
   return (
     <motion.div
       className="text-[12px] w-full sm:w-[70%] flex flex-col gap-3 md:w-[40%] lg:w-[30%]"
-      initial={{ opacity: 0, x: 0 }} // Estado inicial
-      animate={{ opacity: 1, x: 0 }} // Estado final
-      exit={{ opacity: 0, x: 100 }} // Estado de saída (desaparece e se move para a direita)
-      transition={{ duration: 0.5 }} // Duração da animação de saída
+      initial={{ height: 0, opacity: 0 }}
+      animate={{ height: "auto", opacity: 1 }}
+      exit={{ height: 0, opacity: 0 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
     >
       <h3>
         {" "}

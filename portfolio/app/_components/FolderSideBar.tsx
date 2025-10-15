@@ -11,7 +11,7 @@ type Props = {
 function FolderSideBar({ text, color, active, onClick }: Props) {
   return (
     <div
-      className={`flex items-center cursor-pointer ${active ? "text-white" : ""} gap-1`}
+      className={`flex items-center cursor-pointer ${active ? "text-white mb-2" : ""} gap-1`}
       onClick={onClick}
     >
       <IoIosArrowDown

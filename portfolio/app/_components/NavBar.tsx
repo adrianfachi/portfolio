@@ -76,9 +76,8 @@ function NavBar({ active, setActiveBoolean }: props) {
               <Link
                 key={item.key}
                 href={item.href}
-                className={`border-gray flex items-center border-b-0 border-r cursor-pointer ${
-                  active == item.key ? "" : "hover:border-b-2"
-                }`}
+                className={`border-gray flex items-center border-b-0 border-r cursor-pointer ${active == item.key ? "" : "hover:border-b-2"
+                  }`}
               >
                 <div className="w-full h-full relative px-4 flex items-center">
                   {item.label}
@@ -100,9 +99,8 @@ function NavBar({ active, setActiveBoolean }: props) {
           </div>
           <Link
             href={"/contato"}
-            className={`border-gray flex items-center border-b-0 border-r cursor-pointer ${
-              active === "contate-me" ? "" : "hover:border-b-2"
-            }`}
+            className={`border-gray flex items-center border-b-0 border-r cursor-pointer ${active === "contate-me" ? "" : "hover:border-b-2"
+              }`}
           >
             <div className="w-full h-full relative px-4 flex items-center border-l border-l-gray">
               _contate-me
@@ -138,9 +136,8 @@ function NavBar({ active, setActiveBoolean }: props) {
                   key={item.key}
                   href={item.href}
                   onClick={handleLinkClick}
-                  className={`text-base text-white px-6 h-10 flex items-center border-b border-gray hover:bg-white/5 transition ${
-                    active === item.key ? "text-purple font-bold" : ""
-                  }`}
+                  className={`text-base text-white px-6 h-10 flex items-center border-b border-gray hover:bg-white/5 transition ${active === item.key ? "text-purple font-bold" : ""
+                    }`}
                 >
                   {item.label}
                 </Link>
@@ -148,9 +145,8 @@ function NavBar({ active, setActiveBoolean }: props) {
               <Link
                 href="/contato"
                 onClick={handleLinkClick}
-                className={`text-base text-white px-6 h-10 flex items-center border-b border-gray hover:bg-white/5 transition ${
-                  active === "contate-me" ? "text-purple font-bold" : ""
-                }`}
+                className={`text-base text-white px-6 h-10 flex items-center border-b border-gray hover:bg-white/5 transition ${active === "contate-me" ? "text-purple font-bold" : ""
+                  }`}
               >
                 _contate-me
               </Link>
