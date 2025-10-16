@@ -1,7 +1,7 @@
 "use client";
 
 import Body from "../_components/Body";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SideBarProjects from "../_components/SideBarProjects";
 import Project from "../_components/Project";
 import projects from "../_lib/projects";
@@ -26,9 +26,19 @@ export default function Projects() {
     });
   };
 
-  const filteredProjects = projects.filter((project) =>
-    checkedLanguages.some((language) => project.languages.includes(language)),
-  );
+  const [filteredProjects, setFilteredProjects] = useState<typeof projects>([]);
+
+  useEffect(() => {
+    const visibleProjects = projects.filter(project =>
+      checkedLanguages.some(language => project.languages.includes(language))
+    );
+
+    const timeout = setTimeout(() => {
+      setFilteredProjects(visibleProjects);
+    }, 400);
+
+    return () => clearTimeout(timeout);
+  }, [projects, checkedLanguages, 400]);
 
   return (
     <Body navBarActive="projetos">
@@ -38,7 +48,7 @@ export default function Projects() {
           handleUnchecked={handleUnchecked}
           checkedLanguages={checkedLanguages}
         />
-        <div className="p-4 md:p-10 flex flex-wrap gap-3 justify-center">
+        <div className="p-4 md:p-10 flex flex-wrap gap-6 justify-center h-fit">
           {filteredProjects.map((project, i) => (
             <Project
               name={project.name}
@@ -47,6 +57,7 @@ export default function Projects() {
               link={project.link}
               number={i + 1}
               key={i}
+              isVisible={checkedLanguages.some((language) => project.languages.includes(language))}
             />
           ))}
         </div>

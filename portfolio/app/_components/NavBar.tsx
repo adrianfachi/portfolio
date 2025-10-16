@@ -24,7 +24,6 @@ function NavBar({ active, setActiveBoolean }: props) {
 
   return (
     <div className="relative max-w-full">
-      {/* Botão do menu */}
       <div className="absolute flex top-1/2 -translate-y-1/2 right-4 z-50 md:hidden">
         <motion.button
           initial={false}

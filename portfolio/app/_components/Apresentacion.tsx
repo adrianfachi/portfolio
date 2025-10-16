@@ -1,32 +1,120 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { motion, Easing } from "framer-motion";
 
 function Apresentacion() {
+  // Configuração base da curva de easing (mantida)
+  const ease: Easing = [0.4, 0, 0.2, 1];
+  // DURAÇÃO BASE REDUZIDA para 0.4s
+  const duration = 0.4;
+
   return (
-    <div className="flex flex-col gap-8 p-4">
-      <div className="">
-        <p className="text-xs">Olá, eu sou o</p>
-        <h1 className="text-white text-3xl md:text-4xl">Adrian Fachi</h1>
-        <h2 className="text-purple text-base md:text-xl">
+    <motion.div
+      className="flex flex-col gap-8 p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      // Duração da animação principal reduzida
+      transition={{ duration: 0.4 }}
+    >
+      <div>
+        <motion.p
+          className="text-xs"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          // DELAY REDUZIDO
+          transition={{ duration, ease, delay: 0.05 }}
+        >
+          Olá, eu sou o
+        </motion.p>
+
+        <motion.h1
+          className="text-white text-3xl md:text-4xl"
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          // DELAY REDUZIDO
+          transition={{ duration: 0.5, ease, delay: 0.15 }}
+        >
+          Adrian Fachi
+        </motion.h1>
+
+        <motion.h2
+          className="text-purple text-base md:text-xl"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          // DELAY REDUZIDO
+          transition={{ duration: 0.5, ease, delay: 0.3 }}
+        >
           &gt; Front-end developer
-        </h2>
+        </motion.h2>
       </div>
+
       <div className="text-xs">
-        <p className="hidden md:flex">// para continuar complete o jogo</p>
-        <p>// meu perfil no github:</p>
-        <p>
-          <span className="text-purple">const </span>{" "}
-          <span className="text-green">gitHubLink </span>={" "}
-          <Link
-            href={"https://github.com/adrianfachi"}
-            target="_blank"
-            className="text-red break-all"
+
+        {/* Adicionei a animação da linha de comentário "// para continuar..." que estava faltando, ajustando o delay */}
+        <motion.p
+          className="hidden md:flex"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration, ease, delay: 0.5 }} // Novo delay
+        >
+          // para continuar complete o jogo
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          // DELAY REDUZIDO
+          transition={{ duration, ease, delay: 0.6 }}
+        >
+          // meu perfil no github:
+        </motion.p>
+        <motion.div>
+          <motion.span
+            className="text-purple"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            // DURAÇÃO E DELAY REDUZIDOS (Efeito "digitação")
+            transition={{ duration: 0.2, delay: 0.7 }}
           >
-            https://github.com/adrianfachi
-          </Link>
-        </p>
+            const{" "}
+          </motion.span>
+          <motion.span
+            className="text-green"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            // DURAÇÃO E DELAY REDUZIDOS
+            transition={{ duration: 0.2, delay: 0.8 }}
+          >
+            gitHubLink{" "}
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            // DURAÇÃO E DELAY REDUZIDOS
+            transition={{ duration: 0.2, delay: 0.9 }}
+          >
+            ={" "}
+          </motion.span>
+          <motion.div
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            // DELAY REDUZIDO
+            transition={{ duration: 0.5, ease, delay: 1.0 }}
+            style={{ display: 'inline-block' }}
+          >
+            <Link
+              href={"https://github.com/adrianfachi"}
+              target="_blank"
+              className="text-red break-all"
+            >
+              https://github.com/adrianfachi
+            </Link>
+          </motion.div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

@@ -7,6 +7,7 @@ import {
   IoMdArrowDropright,
   IoMdArrowDropup,
 } from "react-icons/io";
+import { motion } from "framer-motion"; // AnimatePresence não é necessário, mas motion sim
 
 type Position = {
   x: number;
@@ -14,9 +15,9 @@ type Position = {
 };
 
 const GRID_SIZE = 20;
+const CELL_SIZE = 15;
 const INITIAL_SNAKE: Position[] = [{ x: 10, y: 10 }];
 const INITIAL_FOOD: Position = { x: 15, y: 10 };
-const MAX_FOOD = 10;
 
 function SnakeGame() {
   const [snake, setSnake] = useState<Position[]>(INITIAL_SNAKE);
@@ -27,8 +28,11 @@ function SnakeGame() {
   const [gameOver, setGameOver] = useState(false);
   const [started, setStarted] = useState(false);
   const [foodEaten, setFoodEaten] = useState(0);
+  const [foodAnimation, setFoodAnimation] = useState<Position | null>(null);
+  const [eatenFoodPosition, setEatenFoodPosition] = useState<Position | null>(
+    null,
+  );
 
-  // movimentação com setas
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowUp" && direction !== "DOWN") setDirection("UP");
@@ -42,9 +46,24 @@ function SnakeGame() {
 
   useEffect(() => {
     if (!started || gameOver) return;
-    const interval = setInterval(moveSnake, 100);
+    const interval = setInterval(moveSnake, 150);
     return () => clearInterval(interval);
   });
+
+  function generateFood(snake: Position[]): Position {
+    let newFood: Position;
+    do {
+      newFood = {
+        x: Math.floor(Math.random() * GRID_SIZE),
+        y: Math.floor(Math.random() * GRID_SIZE),
+      };
+    } while (
+      snake.some(
+        (segment) => segment.x === newFood.x && segment.y === newFood.y,
+      )
+    );
+    return newFood;
+  }
 
   function moveSnake() {
     const head = { ...snake[0] };
@@ -53,34 +72,29 @@ function SnakeGame() {
     if (direction === "LEFT") head.x -= 1;
     if (direction === "RIGHT") head.x += 1;
 
-    // colisão com borda
+    // Checagem de Colisão
     if (
       head.x < 0 ||
       head.y < 0 ||
       head.x >= GRID_SIZE ||
-      head.y >= GRID_SIZE
+      head.y >= GRID_SIZE ||
+      snake.some((s) => s.x === head.x && s.y === head.y)
     ) {
       setGameOver(true);
       return;
     }
 
-    // colisão com corpo
-    if (snake.some((s) => s.x === head.x && s.y === head.y)) {
-      setGameOver(true);
-      return;
-    }
-
     const newSnake = [head, ...snake];
+    setEatenFoodPosition(null); // Limpa a posição da comida a cada movimento
 
-    // comeu comida
     if (head.x === food.x && head.y === food.y) {
-      setFood({
-        x: Math.floor(Math.random() * GRID_SIZE),
-        y: Math.floor(Math.random() * GRID_SIZE),
-      });
-      setFoodEaten((prev) => Math.min(prev + 1, MAX_FOOD));
+      // A cobra comeu
+      setFoodAnimation({ x: food.x, y: food.y });
+      setEatenFoodPosition({ x: food.x, y: food.y }); // Guarda a posição para a animação do novo segmento
+      setFood(generateFood(newSnake)); // Gera nova comida
+      setFoodEaten((prev) => prev + 1);
     } else {
-      newSnake.pop();
+      newSnake.pop(); // Remove a cauda se não comeu
     }
 
     setSnake(newSnake);
@@ -93,12 +107,20 @@ function SnakeGame() {
     setGameOver(false);
     setFoodEaten(0);
     setStarted(true);
+    setEatenFoodPosition(null);
   }
 
   return (
-    <div className="hidden items-center justify-center bg-gradient-to-br from-[#00d5c082] to-[#43D9AD13] lg:flex rounded-2xl m-4">
+    // MODIFICADO: O div foi alterado para motion.div e as propriedades de animação foram adicionadas
+    <motion.div
+      initial={{ opacity: 0, x: 100 }} // Começa invisível e 100px para a direita
+      animate={{ opacity: 1, x: 0 }} // Anima para visível e na posição correta
+      transition={{ duration: 0.8, type: "spring", stiffness: 100, delay: 1 }} // Transição suave
+      className="hidden items-center justify-center bg-gradient-to-br from-[#00d5c082] to-[#43D9AD13] lg:flex rounded-2xl m-4"
+    >
       <div className="flex space-x-6 p-6 rounded-2xl shadow-xl">
-        <div className="bg-[#0a1a2a] rounded-xl shadow-lg relative">
+        <div className="bg-[#0a1a2a] rounded-xl shadow-lg relative z-2">
+          {/* O Seu layout original para Start/Game Over */}
           {!started ? (
             <button
               onClick={resetGame}
@@ -121,46 +143,121 @@ function SnakeGame() {
           ) : null}
 
           <div
-            className="bg-transparent"
             style={{
-              display: "grid",
-              gridTemplateColumns: `repeat(${GRID_SIZE}, 15px)`,
+              top: 0,
+              left: 0,
+              width: GRID_SIZE * CELL_SIZE,
+              height: GRID_SIZE * CELL_SIZE,
+              pointerEvents: "none",
             }}
           >
-            {Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_, i) => {
-              const x = i % GRID_SIZE;
-              const y = Math.floor(i / GRID_SIZE);
-              const isSnake = snake.some((s) => s.x === x && s.y === y);
-              const isFood = food.x === x && food.y === y;
-              const isHead = snake[0].x === x && snake[0].y === y;
+            {/* Animação da Comida (Mais vibrante) */}
+            <motion.div
+              animate={{
+                scale: [1, 1.25, 1],
+                rotate: [0, 15, -15, 0], // Adicionado rotação
+              }}
+              transition={{
+                duration: 0.7,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="absolute rounded-full shadow-[0_0_8px_#4ade80]"
+              style={{
+                width: CELL_SIZE,
+                height: CELL_SIZE,
+                left: food.x * CELL_SIZE,
+                top: food.y * CELL_SIZE,
+                background: "#4ade80",
+              }}
+            />
+
+            {/* Animação de Efeito de "Partícula" de Comida (Mais rápido) */}
+            {foodAnimation && (
+              <motion.div
+                initial={{
+                  left: foodAnimation.x * CELL_SIZE,
+                  top: foodAnimation.y * CELL_SIZE,
+                  scale: 1,
+                  opacity: 1,
+                }}
+                animate={{
+                  scale: 0,
+                  opacity: 0,
+                  y: -CELL_SIZE, // Animação para cima
+                }}
+                transition={{
+                  duration: 0.3, // Mais rápido
+                  ease: "easeOut",
+                }}
+                className="absolute w-[15px] h-[15px] rounded-full bg-yellow-300 shadow-[0_0_6px_#facc15] pointer-events-none"
+                onAnimationComplete={() => setFoodAnimation(null)}
+              />
+            )}
+
+            {/* Renderização da Cobra com Animação de Crescimento */}
+            {snake.map((seg, idx) => {
+              const isHead = idx === 0;
+              const isNewSegment = eatenFoodPosition && idx === 0;
+
+              const alpha = 1 - (idx / (snake.length - 1)) * 0.2;
+              const bg = `rgba(67,217,173)`;
+
+              // Define a posição inicial SOMENTE para o novo segmento
+              const initialPos = isNewSegment
+                ? {
+                  left: eatenFoodPosition.x * CELL_SIZE,
+                  top: eatenFoodPosition.y * CELL_SIZE,
+                  scale: 0.1, // Começa bem pequeno
+                  opacity: 0.5,
+                }
+                : {
+                  left: seg.x * CELL_SIZE,
+                  top: seg.y * CELL_SIZE,
+                };
 
               return (
-                <div
-                  key={i}
-                  className={`h-[15px] w-[15px] ${
-                    isHead && !gameOver
-                      ? `bg-[#43D9AD] shadow-[0_0_8px_#22d3ee] ${
-                          direction === "UP"
-                            ? "rounded-t-2xl"
-                            : direction === "LEFT"
-                              ? "rounded-l-2xl"
-                              : direction === "DOWN"
-                                ? "rounded-b-2xl"
-                                : "rounded-r-2xl"
-                        }`
-                      : isSnake
-                        ? "bg-[#43D9AD] shadow-[0_0_8px_#22d3ee]"
-                        : isFood
-                          ? "bg-green-400 rounded-full shadow-[0_0_6px_#4ade80]"
-                          : "bg-transparent"
-                  }`}
+                <motion.div
+                  key={`seg-${idx}`}
+                  initial={initialPos}
+                  animate={{
+                    left: seg.x * CELL_SIZE,
+                    top: seg.y * CELL_SIZE,
+                    opacity: alpha,
+                    scale: isHead ? 1.05 : 1, // Pequeno pulsar na cabeça
+                  }}
+                  transition={{
+                    type: "tween",
+                    ease: "linear",
+                    duration: 0.14,
+                  }}
+                  style={{
+                    position: "absolute",
+                    width: CELL_SIZE,
+                    height: CELL_SIZE,
+                    background: bg,
+                    boxShadow: isHead
+                      ? "0 0 10px rgba(34,211,238,0.7)"
+                      : "none",
+                    pointerEvents: "none",
+                  }}
+                  className={`${isHead
+                    ? direction === "UP"
+                      ? "rounded-t-2xl"
+                      : direction === "LEFT"
+                        ? "rounded-l-2xl"
+                        : direction === "DOWN"
+                          ? "rounded-b-2xl"
+                          : "rounded-r-2xl"
+                    : ""
+                    }`}
                 />
               );
             })}
           </div>
         </div>
 
-        {/* Painel lateral */}
+        {/* Barra Lateral (Controles e Score) */}
         <div className="text-gray-200 font-mono space-y-6">
           <div>
             <p>// use as setas do</p>
@@ -182,25 +279,10 @@ function SnakeGame() {
               </div>
             </div>
           </div>
-
-          <div>
-            <p>// comidas</p>
-            <div className="flex space-x-2 mt-2">
-              {Array.from({ length: MAX_FOOD }).map((_, i) => (
-                <div
-                  key={i}
-                  className={`w-2 h-2 rounded-full ${
-                    i < foodEaten
-                      ? "bg-[#43D9AD] shadow-[0_0_12px_#22d3ee]"
-                      : "bg-[#1b2c3c]"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
+          <p>// score: {foodEaten + 1}</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
