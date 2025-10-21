@@ -7,7 +7,6 @@ type Props = {
   menssages: string[];
 };
 
-// Variantes para a animação sequencial das linhas
 const lineVariants: Variants = {
   hidden: { opacity: 0, y: 10 },
   visible: {
@@ -20,14 +19,12 @@ const lineVariants: Variants = {
   },
 };
 
-// Variantes para o container principal (Orquestração + Atraso)
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
       delayChildren: 0.4,
-      // Atraso entre o início da animação de cada linha (sequencial)
       staggerChildren: 0.08,
     },
   },
@@ -91,7 +88,6 @@ function MessageCode({ menssages }: Props) {
   ];
 
   return (
-    // Container Principal: Orquestra o início da animação e gerencia o overflow
     <motion.div
       className="p-4 flex flex-col md:w-1/2 md:border-l border-l-gray md:p-10 overflow-hidden"
       variants={containerVariants}
@@ -107,7 +103,7 @@ function MessageCode({ menssages }: Props) {
           <span className="pr-4 text-gray-400 min-w-[30px] text-right">
             {index + 1}
           </span>
-          <div className="w-full text-white break-words">
+          <div className="w-full text-white break-all">
             {content}
           </div>
         </motion.div>

@@ -69,14 +69,13 @@ export default function About() {
     if (currentContent && shouldAnimate) {
       animatedTabs.current.add(currentContent.title);
     }
-    console.log(animatedTabs)
   }, [currentContent])
 
 
 
   return (
     <Body navBarActive="sobre">
-      <div className="flex-grow flex flex-col h-full w-full md:flex-row">
+      <div className="flex-grow flex flex-col w-full md:flex-row overflow-y-auto scroll-style">
         <SideBarAbout
           setActiveTabs={setActiveTabs}
           setActiveTab={setActiveTab}

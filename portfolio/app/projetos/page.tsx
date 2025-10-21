@@ -42,13 +42,13 @@ export default function Projects() {
 
   return (
     <Body navBarActive="projetos">
-      <div className="flex-grow flex flex-col h-full w-full md:flex-row">
+      <div className="flex-grow flex flex-col h-full w-full md:flex-row md:overflow-y-hidden overflow-y-auto scroll-style">
         <SideBarProjects
           setCheckedLanguages={setCheckedLanguages}
           handleUnchecked={handleUnchecked}
           checkedLanguages={checkedLanguages}
         />
-        <div className="p-4 md:p-10 flex flex-wrap gap-6 justify-center h-fit">
+        <div className="p-4 md:p-10 flex flex-wrap gap-6 justify-center md:overflow-y-auto scroll-style">
           {filteredProjects.map((project, i) => (
             <Project
               name={project.name}

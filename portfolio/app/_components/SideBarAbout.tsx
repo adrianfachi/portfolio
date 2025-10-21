@@ -1,16 +1,14 @@
 "use client";
 
-import { HiOutlineCode } from "react-icons/hi";
-import { GrContactInfo } from "react-icons/gr";
-import { FaGamepad } from "react-icons/fa";
 import { MdEmail, MdPhone } from "react-icons/md";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import linguagens from "../_lib/linguagens";
 import TitleSideBar from "./TitleSideBar";
 import infoSideBar from "../_lib/infoSideBar";
 import FolderSideBar from "./FolderSideBar";
 import SideBarElementTxt from "./SideBarElementTxt";
+import Link from "next/link";
 
 type props = {
   setActiveTabs: Dispatch<SetStateAction<string[]>>;
@@ -23,10 +21,7 @@ function SideBarAbout({
   setActiveTab,
   setLastActiveTab,
 }: props) {
-  const [checked, setChecked] = useState<string>("professional-info");
   const [isPC, setIsPC] = useState(false);
-  const infoInputs = ["professional-info", "personal-info", "hobbies"];
-  const iconsInfoInputs = [HiOutlineCode, GrContactInfo, FaGamepad];
   const [activeFolders, setActiveFolders] = useState<string[]>([]);
 
   const sections = [
@@ -154,16 +149,27 @@ function SideBarAbout({
     }
   ];
 
+  const sidebarRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleResize = () => setIsPC(window.innerWidth >= 768);
     handleResize();
     window.addEventListener("resize", handleResize);
+
+    if (sidebarRef.current && isPC) {
+      const container = sidebarRef.current;
+      const scrollbarWidth = container.offsetWidth - container.clientWidth;
+
+      container.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
+    } else if (sidebarRef.current && !isPC) {
+      sidebarRef.current.style.removeProperty('--scrollbar-width');
+    }
+
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [isPC]);
 
   useEffect(() => {
-    if (isPC) setActiveFolders(["PRI", "LI", "ES", "PEI", "BIO", "INT", "EDU", "HO", "HOF", "CON"]);
-    else setActiveFolders([]);
+    if (isPC) setActiveFolders(["PRI", "PEI", "BIO", "HO", "CON"]);
+    else setActiveFolders(["PEI", "BIO"]);
   }, [isPC]);
 
   const toggleFolder = (id: string) => {
@@ -177,110 +183,93 @@ function SideBarAbout({
   const isActive = (id: string) => activeFolders.includes(id);
 
   return (
-    <div className="flex flex-col text-primary w-full select-none md:flex-row md:w-fit">
-      <div className="flex p-4 gap-4 text-primary w-full border-b border-b-gray justify-center md:flex-col md:border-r md:border-r-gray md:w-fit md:justify-start">
-        {infoInputs.map((e, index) => {
-          const Icon = iconsInfoInputs[index];
-          return (
-            <Icon
-              key={index}
-              className={`${checked === e ? "text-white" : ""} cursor-pointer`}
-              size={20}
-              onClick={() => setChecked(e)}
-            />
-          );
-        })}
-      </div>
-      <div className="flex flex-col text-primary md:border-r md:border-r-gray w-full md:w-fit text-nowrap">
-        {sections
-          .filter((section) => section.key === checked)
-          .map((section) =>
-            section.folders.map((folder) => (
-              <div key={folder.id}>
-                <div
-                  className="p-2 border-b border-b-gray gap-2"
+    <div ref={sidebarRef} className="flex flex-col h-auto md:max-h-full md:min-h-full text-primary w-full md:w-fit md:min-w-fit text-nowrap border-b border-b-gray md:border-b-0 select-none scroll-style md:overflow-y-auto md:border-r md:border-r-gray">
+      {sections
+        .map((section) =>
+          section.folders.map((folder) => (
+            <div key={folder.id} className="pt-2 px-2">
+              <div
+                onClick={() => toggleFolder(folder.id)}
+              >
+                <TitleSideBar
+                  text={folder.title}
+                  active={isActive(folder.id)}
                   onClick={() => toggleFolder(folder.id)}
-                >
-                  <TitleSideBar
-                    text={folder.title}
-                    active={isActive(folder.id)}
-                    onClick={() => toggleFolder(folder.id)}
-                  />
-                </div>
-                <AnimatePresence>
-                  {isActive(folder.id) && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className="flex flex-col gap-2 py-2"
-                    >
-                      {folder.children.map((child) => (
-                        <div key={child.id}>
-                          <div
-                            className="pl-4 pr-2"
+                />
+              </div>
+              <AnimatePresence>
+                {isActive(folder.id) && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                    className="flex flex-col gap-1"
+                  >
+                    {folder.children.map((child) => (
+                      <div key={child.id}>
+                        <div
+                          className="pl-6"
+                          onClick={() => toggleFolder(child.id)}
+                        >
+                          <FolderSideBar
+                            text={child.title}
+                            color={child.color}
+                            active={isActive(child.id)}
                             onClick={() => toggleFolder(child.id)}
-                          >
-                            <FolderSideBar
-                              text={child.title}
-                              color={child.color}
-                              active={isActive(child.id)}
-                              onClick={() => toggleFolder(child.id)}
-                            />
-                          </div>
-                          <AnimatePresence>
-                            {isActive(child.id) && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.2, ease: "easeInOut" }}
-                                className="pl-4 pr-2 flex flex-col gap-2"
-                              >
-                                {child.content}
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
+                          />
                         </div>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))
-          )}
-        <div
-          className="p-2 border-y border-y-gray"
+                        <AnimatePresence>
+                          {isActive(child.id) && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.2, ease: "easeInOut" }}
+                              className="pl-8 pr-2 flex flex-col gap-1"
+                            >
+                              {child.content}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ))
+        )}
+      <div
+        className="p-2"
+        onClick={() => toggleFolder("CON")}
+      >
+        <TitleSideBar
+          text="contatos"
+          active={isActive("CON")}
           onClick={() => toggleFolder("CON")}
-        >
-          <TitleSideBar
-            text="contatos"
-            active={isActive("CON")}
-            onClick={() => toggleFolder("CON")}
-          />
-        </div>
-        <AnimatePresence>
-          {isActive("CON") && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="flex flex-col"
-            >
-              <div className="flex items-center ml-2 px-3 py-1 gap-1">
-                <MdEmail fontSize={20} />
-                <span className="text-sm">adrianfachidev@gmail.com</span>
-              </div>
-              <div className="flex items-center ml-2 px-3 py-1 gap-1">
-                <MdPhone fontSize={20} />
-                <span className="text-sm">+55 51 996105286</span>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        />
       </div>
+      <AnimatePresence>
+        {isActive("CON") && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="flex flex-col"
+          >
+            <div className="flex items-center ml-2 px-3 py-1 gap-1">
+              <MdEmail fontSize={20} />
+              <Link href={"contato"} className="text-sm cursor-pointer">adrianfachidev@gmail.com</Link>
+            </div>
+            <div className="flex items-center ml-2 px-3 py-1 gap-1">
+              <MdPhone fontSize={20} />
+              <a href="https://wa.me/5551995105286" target="_blank" className="text-sm cursor-pointer">+55 51 996105286</a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

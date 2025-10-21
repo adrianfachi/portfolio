@@ -122,8 +122,8 @@ function InputsContact({
                 type="text"
                 id="name"
                 className={`bg-[#02061880] rounded-lg p-2 border  border-gray outline-none shadow-none ${errors.name
-                    ? "bg-[#46080930] border-red-500 focus:border-red-500 focus:outline-0"
-                    : "focus:border-white"
+                  ? "bg-[#46080930] border-red-500 focus:border-red-500 focus:outline-0"
+                  : "focus:border-white"
                   } `}
                 value={messages[0]}
                 {...register("name", {
@@ -142,8 +142,8 @@ function InputsContact({
                 type="text"
                 id="email"
                 className={`bg-[#02061880] rounded-lg p-2 border border-gray outline-none shadow-none ${errors.email
-                    ? "bg-[#46080930] border-red-500 focus:border-red-500 focus:outline-0"
-                    : "focus:border-white"
+                  ? "bg-[#46080930] border-red-500 focus:border-red-500 focus:outline-0"
+                  : "focus:border-white"
                   }`}
                 value={messages[1]}
                 {...register("email", {
@@ -162,8 +162,8 @@ function InputsContact({
                 id="message"
                 placeholder="sua mensagem aqui..."
                 className={`bg-[#02061880] rounded-lg p-2 border border-gray outline-none shadow-none max-h-[250px] scroll-style resize overflow-auto h-[150px] w-[500px] max-w-full ${errors.message
-                    ? "bg-[#46080930] border-red-500 focus:border-red-500 focus:outline-0"
-                    : "focus:border-white"
+                  ? "bg-[#46080930] border-red-500 focus:border-red-500 focus:outline-0"
+                  : "focus:border-white"
                   }`}
                 value={messages[2]}
                 {...register("message", {
@@ -181,8 +181,8 @@ function InputsContact({
                 type="submit"
                 value={`${!loading ? "enviar" : ""}`}
                 className={`w-full py-2 rounded-lg ${isValid
-                    ? "cursor-pointer bg-orange text-black"
-                    : "cursor-no-drop bg-gray"
+                  ? "cursor-pointer bg-orange text-black"
+                  : "cursor-no-drop bg-gray"
                   }`}
                 disabled={loading}
               />

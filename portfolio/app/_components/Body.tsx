@@ -24,7 +24,7 @@ function Body({ children, navBarActive }: Props) {
   }, [activeMenu]);
 
   return (
-    <div className="m-4 border-gray border text-primary rounded-lg min-h-[calc(100vh-2rem)] bg-[#0F172B] flex flex-col background-stripes md:m-12 md:min-h-[calc(100vh-6rem)]">
+    <div className="m-4 border-gray border text-primary rounded-lg h-[calc(100vh-2rem)] bg-[#0F172B] flex flex-col background-stripes md:m-12 md:h-[calc(100vh-6rem)] overflow-auto scroll-style">
       <NavBar active={navBarActive} setActiveBoolean={setActiveMenu} />
       {children}
       <Footer />

@@ -126,7 +126,7 @@ function NavBar({ active, setActiveBoolean }: props) {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed top-[3rem] right-4 w-[calc(100%-2rem)] bg-[#0F172B] z-40 border border-gray rounded-b-lg overflow-hidden md:hidden"
+            className="fixed top-[3rem] right-4 w-[calc(100%-2rem)] background-stripes bg-[#0F172B] z-40 rounded-b-lg overflow-hidden md:hidden border-x border-gray"
           >
             <div className="flex flex-col p-4">
               <p className="text-xs text-primary px-6 mb-2"># navigate:</p>
@@ -154,10 +154,17 @@ function NavBar({ active, setActiveBoolean }: props) {
         )}
       </AnimatePresence>
       {isMenuOpen && (
-        <div
-          className="fixed inset-0 bg-transparent z-30 md:hidden"
-          onClick={handleLinkClick}
-        />
+        <AnimatePresence>
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="fixed inset-0 background-stripes bg-[#0F172B] z-30 md:hidden m-4 rounded-lg border border-gray mt-[47.2px] mb-[48.8px]"
+            onClick={handleLinkClick}
+          />
+        </AnimatePresence>
+
       )}
       <div className="border-b-gray text-primary text-xs border-b pl-6 h-8 flex items-center gap-16 md:hidden">
         <p className="media2">adrian-fachi</p>
