@@ -18,7 +18,7 @@ export default function Contact() {
 
   return (
     <Body navBarActive="contate-me">
-      <div className="flex-grow flex flex-col gap-10 md:flex-row">
+      <div className="flex-grow flex flex-col gap-10 md:flex-row overflow-y-auto scroll-style">
         <InputsContact
           onNameChange={(value: string) => handleChange(0, value)}
           onEmailChange={(value: string) => handleChange(1, value)}

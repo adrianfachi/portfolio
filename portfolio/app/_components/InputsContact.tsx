@@ -6,7 +6,6 @@ import { messageValidateSchema } from "../_utils/messageValidate";
 import { useState } from "react";
 import { messageType } from "../_types/messageType";
 import { ScaleLoader } from "react-spinners";
-// IMPORTANDO motion e AnimatePresence
 import { motion, AnimatePresence, Easing } from "framer-motion";
 import axios from "axios";
 
@@ -16,8 +15,6 @@ type Props = {
   onMessageChange: (value: string) => void;
   messages: string[];
 };
-
-// Renomeado para seguir a convenção de PascalCase para componentes React
 function InputsContact({
   onEmailChange,
   onMessageChange,
@@ -38,7 +35,6 @@ function InputsContact({
   const [submmited, setSubmmited] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  // Definindo variantes para os itens do formulário
   const itemVariants = {
     hidden: { opacity: 0, y: 10 },
     visible: {
@@ -51,13 +47,12 @@ function InputsContact({
     },
   };
 
-  // Definindo variantes para o container do formulário (para orquestrar a entrada)
   const listVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1, // Pequeno atraso entre cada campo (0.1s)
+        staggerChildren: 0.1,
       },
     },
     exit: {
@@ -101,11 +96,9 @@ function InputsContact({
   };
 
   return (
-    // Container principal não precisa de animação, apenas para centralização
-    <div className="max-w-[calc(100%-2rem)] p-4 md:p-10 m-auto md:max-w-1/2">
+    <div className="max-w-[calc(100%-2rem)] p-4 md:p-10 m-auto md:max-w-1/2 min-h-fit">
       <AnimatePresence mode="wait">
         {!submmited ? (
-          // 1. O Formulário (Animação de Entrada e Saída)
           <motion.form
             key="contactForm"
             className="text-sm flex flex-col gap-4"
@@ -113,9 +106,8 @@ function InputsContact({
             variants={listVariants}
             initial="hidden"
             animate="visible"
-            exit="exit" // Aplica a animação de saída ao ser removido
+            exit="exit"
           >
-            {/* Campo NOME */}
             <motion.div className="flex flex-col gap-1" variants={itemVariants}>
               <label htmlFor="name">_nome:</label>
               <input
@@ -135,7 +127,6 @@ function InputsContact({
               </div>
             </motion.div>
 
-            {/* Campo EMAIL */}
             <motion.div className="flex flex-col gap-1" variants={itemVariants}>
               <label htmlFor="email">_email:</label>
               <input
@@ -155,7 +146,6 @@ function InputsContact({
               </div>
             </motion.div>
 
-            {/* Campo MENSAGEM */}
             <motion.div className="flex flex-col gap-1" variants={itemVariants}>
               <label htmlFor="message">_mensagem:</label>
               <textarea
@@ -175,7 +165,6 @@ function InputsContact({
               </div>
             </motion.div>
 
-            {/* Botão ENVIAR */}
             <motion.div className="relative w-[100px]" variants={itemVariants}>
               <input
                 type="submit"
@@ -200,7 +189,6 @@ function InputsContact({
             </motion.div>
           </motion.form>
         ) : (
-          // 2. A Mensagem de Sucesso (Animação de Entrada e Saída)
           <motion.div
             key="successMessage"
             className="flex flex-col gap-5 items-center"

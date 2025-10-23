@@ -42,6 +42,11 @@ body {
   );
 }
 
+.scroll-style {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
 .scroll-style::-webkit-scrollbar {
   width: 5px;
   height: 3px;

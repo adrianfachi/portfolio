@@ -89,7 +89,7 @@ function MessageCode({ menssages }: Props) {
 
   return (
     <motion.div
-      className="p-4 flex flex-col md:w-1/2 md:border-l border-l-gray md:p-10 overflow-hidden"
+      className="p-4 flex flex-col md:w-1/2 md:border-l border-l-gray md:p-10 overflow-hidden min-h-fit"
       variants={containerVariants}
       initial="hidden"
       animate="visible"

@@ -75,14 +75,14 @@ export default function About() {
 
   return (
     <Body navBarActive="sobre">
-      <div className="flex-grow flex flex-col w-full md:flex-row overflow-y-auto scroll-style">
+      <div className="flex-grow flex flex-col w-full md:flex-row overflow-y-auto md:overflow-y-hidden scroll-style">
         <SideBarAbout
           setActiveTabs={setActiveTabs}
           setActiveTab={setActiveTab}
           setLastActiveTab={setLastActiveTab}
         />
 
-        <div className="flex flex-col max-w-full min-w-0 w-full">
+        <div className="flex flex-col max-w-full min-w-0 w-full min-h-full">
           <TabsAbout
             tabs={activeTabs}
             onClose={handleCloseTab}

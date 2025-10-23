@@ -226,7 +226,7 @@ function SideBarAbout({
                               animate={{ height: "auto", opacity: 1 }}
                               exit={{ height: 0, opacity: 0 }}
                               transition={{ duration: 0.2, ease: "easeInOut" }}
-                              className="pl-8 pr-2 flex flex-col gap-1"
+                              className="pl-10 pr-2 flex flex-col gap-1"
                             >
                               {child.content}
                             </motion.div>

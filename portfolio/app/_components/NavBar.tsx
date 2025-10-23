@@ -1,12 +1,11 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 type props = {
   active: string;
-  setActiveBoolean: Dispatch<SetStateAction<boolean>>;
 };
 
 const menuItems = [
@@ -15,11 +14,10 @@ const menuItems = [
   { href: "/projetos", label: "_projetos", key: "projetos" },
 ];
 
-function NavBar({ active, setActiveBoolean }: props) {
+function NavBar({ active }: props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleLinkClick = () => {
     setIsMenuOpen(false);
-    setActiveBoolean(false);
   };
 
   return (
@@ -30,7 +28,6 @@ function NavBar({ active, setActiveBoolean }: props) {
           animate={isMenuOpen ? "open" : "closed"}
           onClick={() => {
             setIsMenuOpen(!isMenuOpen);
-            setActiveBoolean(!isMenuOpen);
           }}
         >
           <svg
@@ -67,10 +64,9 @@ function NavBar({ active, setActiveBoolean }: props) {
       </div>
 
       <div className="hidden md:flex gap-16 w-full h-8 border-b-gray text-primary text-xs border-b">
-        <p className="text-nowrap pl-6 flex items-center">adrian-fachi</p>
-
         <div className="flex justify-between w-full">
-          <div className="flex h-8 border-l border-gray">
+          <div className="flex h-8">
+            <p className="text-primary text-xs border-b pl-3 pr-32 h-8 flex items-center gap-16 border-r border-gray">adrian-fachi</p>
             {menuItems.map((item) => (
               <Link
                 key={item.key}
@@ -98,7 +94,7 @@ function NavBar({ active, setActiveBoolean }: props) {
           </div>
           <Link
             href={"/contato"}
-            className={`border-gray flex items-center border-b-0 border-r cursor-pointer ${active === "contate-me" ? "" : "hover:border-b-2"
+            className={`border-gray flex items-center border-b-0 cursor-pointer ${active === "contate-me" ? "" : "hover:border-b-2"
               }`}
           >
             <div className="w-full h-full relative px-4 flex items-center border-l border-l-gray">
@@ -122,20 +118,22 @@ function NavBar({ active, setActiveBoolean }: props) {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            style={{ transformOrigin: "top right" }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed top-[3rem] right-4 w-[calc(100%-2rem)] background-stripes bg-[#0F172B] z-40 rounded-b-lg overflow-hidden md:hidden border-x border-gray"
+            className="fixed top-[48.8px] w-[calc(100%-2rem-2px)] background-stripes bg-[#0F172B] z-40 rounded-b-lg md:hidden h-[calc(100%-1rem-50.2px)] min-h-[calc(100%-1rem-50.2px)] overflow-auto scroll-style"
+            onClick={handleLinkClick}
           >
-            <div className="flex flex-col p-4">
-              <p className="text-xs text-primary px-6 mb-2"># navigate:</p>
+            <div className="flex flex-col py-2" onClick={(e) => e.stopPropagation()}>
+              <p className="text-xs text-primary z-50 px-6 mb-2"># navigate:</p>
               {menuItems.map((item) => (
                 <Link
                   key={item.key}
                   href={item.href}
                   onClick={handleLinkClick}
-                  className={`text-base text-white px-6 h-10 flex items-center border-b border-gray hover:bg-white/5 transition ${active === item.key ? "text-purple font-bold" : ""
+                  className={`text-base text-white px-6 h-10 flex items-center border-b border-gray hover:bg-white/5 transition ${active === item.key ? "font-bold" : ""
                     }`}
                 >
                   {item.label}
@@ -144,7 +142,7 @@ function NavBar({ active, setActiveBoolean }: props) {
               <Link
                 href="/contato"
                 onClick={handleLinkClick}
-                className={`text-base text-white px-6 h-10 flex items-center border-b border-gray hover:bg-white/5 transition ${active === "contate-me" ? "text-purple font-bold" : ""
+                className={`text-base text-white px-6 h-10 flex items-center hover:bg-white/5 transition ${active === "contate-me" ? "text-purple font-bold" : ""
                   }`}
               >
                 _contate-me
@@ -153,19 +151,6 @@ function NavBar({ active, setActiveBoolean }: props) {
           </motion.div>
         )}
       </AnimatePresence>
-      {isMenuOpen && (
-        <AnimatePresence>
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed inset-0 background-stripes bg-[#0F172B] z-30 md:hidden m-4 rounded-lg border border-gray mt-[47.2px] mb-[48.8px]"
-            onClick={handleLinkClick}
-          />
-        </AnimatePresence>
-
-      )}
       <div className="border-b-gray text-primary text-xs border-b pl-6 h-8 flex items-center gap-16 md:hidden">
         <p className="media2">adrian-fachi</p>
       </div>

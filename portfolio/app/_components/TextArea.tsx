@@ -61,7 +61,7 @@ export default function TextArea({ title, text, animateTypewriter }: Props) {
 
   return (
     <div
-      className="flex text-sm w-full text-primary p-2"
+      className="flex text-sm w-full text-primary p-2 h-full md:overflow-y-auto scroll-style"
     >
       <div className="flex items-end flex-col px-2 select-none">
         {Array.from({ length: lineCount + 1 }, (_, i) => (
