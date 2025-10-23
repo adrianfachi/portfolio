@@ -82,7 +82,7 @@ export default function About() {
           setLastActiveTab={setLastActiveTab}
         />
 
-        <div className="flex flex-col max-w-full min-w-0 w-full min-h-full">
+        <div className="flex flex-col max-w-full min-w-0 w-full max-h-fit">
           <TabsAbout
             tabs={activeTabs}
             onClose={handleCloseTab}
