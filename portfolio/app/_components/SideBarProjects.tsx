@@ -29,7 +29,7 @@ function SideBarProjects({
   };
 
   return (
-    <div className="flex flex-col text-primary md:border-r md:border-r-gray w-full md:w-fit border-b border-b-gray md:border-b-0 select-none">
+    <div className="flex flex-col text-primary md:border-r md:border-r-gray w-full md:w-fit min-w-fit border-b border-b-gray md:border-b-0 select-none scroll-style overflow-y-auto">
       <div
         className="p-2 border-b border-b-gray gap-2"
         onClick={() => {

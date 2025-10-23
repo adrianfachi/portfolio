@@ -116,7 +116,7 @@ function SnakeGame() {
       initial={{ opacity: 0, x: 100 }} // Começa invisível e 100px para a direita
       animate={{ opacity: 1, x: 0 }} // Anima para visível e na posição correta
       transition={{ duration: 0.8, type: "spring", stiffness: 100, delay: 1 }} // Transição suave
-      className="hidden items-center justify-center bg-gradient-to-br from-[#00d5c082] to-[#43D9AD13] lg:flex rounded-2xl m-4"
+      className="hidden items-center justify-center bg-gradient-to-br from-[#00d5c082] to-[#43D9AD13] lg:flex rounded-2xl m-4 min-h-fit h-fit media3"
     >
       <div className="flex space-x-6 p-6 rounded-2xl shadow-xl">
         <div className="bg-[#0a1a2a] rounded-xl shadow-lg relative z-2">

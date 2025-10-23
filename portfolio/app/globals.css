@@ -82,3 +82,9 @@ body {
     display: none;
   }
 }
+
+@media (max-height: 550px) {
+  .media3 {
+    display: none;
+  }
+}
