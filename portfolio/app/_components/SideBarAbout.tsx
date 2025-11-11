@@ -9,6 +9,7 @@ import infoSideBar from "../_lib/infoSideBar";
 import FolderSideBar from "./FolderSideBar";
 import SideBarElementTxt from "./SideBarElementTxt";
 import Link from "next/link";
+import toast, { Toaster } from "react-hot-toast";
 
 type props = {
   setActiveTabs: Dispatch<SetStateAction<string[]>>;
@@ -23,6 +24,11 @@ function SideBarAbout({
 }: props) {
   const [isPC, setIsPC] = useState(false);
   const [activeFolders, setActiveFolders] = useState<string[]>([]);
+
+  function copyEmail() {
+    navigator.clipboard.writeText("adrianfachidev@gmail.com");
+    toast.success("Email copiado!", { style: { backgroundColor: "var(--background)", color: "var(--foreground)" } })
+  }
 
   const sections = [
     {
@@ -261,7 +267,8 @@ function SideBarAbout({
           >
             <div className="flex items-center ml-2 px-3 py-1 gap-1">
               <MdEmail fontSize={20} />
-              <Link href={"contato"} className="text-sm cursor-pointer">adrianfachidev@gmail.com</Link>
+              <div onClick={copyEmail} className="text-sm cursor-pointer">adrianfachidev@gmail.com</div>
+              <Toaster position="top-right" />
             </div>
             <div className="flex items-center ml-2 px-3 py-1 gap-1">
               <MdPhone fontSize={20} />
