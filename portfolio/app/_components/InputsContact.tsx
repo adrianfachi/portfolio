@@ -66,7 +66,7 @@ function InputsContact({
     setLoading(true);
     try {
       await axios.post(
-        "https://formsubmit.co/ajax/adrianfachidev@gmail.com",
+        "/api/send",
         {
           name: data.name,
           email: data.email,
