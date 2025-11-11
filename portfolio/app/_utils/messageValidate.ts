@@ -8,5 +8,5 @@ export const messageValidateSchema = Yup.object().shape({
     .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, "Email inválido"),
   message: Yup.string()
     .required("Mensagem é obrigatória")
-    .min(10, "Mensagem deve conter no mínimo 10 caracteres"),
+    .min(5, "Mensagem deve conter no mínimo 5 caracteres"),
 });

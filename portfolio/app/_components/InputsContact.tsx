@@ -8,6 +8,7 @@ import { messageType } from "../_types/messageType";
 import { ScaleLoader } from "react-spinners";
 import { motion, AnimatePresence, Easing } from "framer-motion";
 import axios from "axios";
+import emailjs from '@emailjs/browser';
 
 type Props = {
   onNameChange: (value: string) => void;
@@ -65,19 +66,15 @@ function InputsContact({
   const onSubmit = async (data: messageType) => {
     setLoading(true);
     try {
-      await axios.post(
-        "/api/send",
+      await emailjs.send(
+        'service_ugl0la5',
+        'template_uvm3ucd',
         {
           name: data.name,
           email: data.email,
           message: data.message,
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        }
+        'I8CNszoTudMHHB5fI'
       );
 
       reset();
