@@ -125,7 +125,7 @@ function InputsContact({
             </motion.div>
 
             <motion.div className="flex flex-col gap-1" variants={itemVariants}>
-              <label htmlFor="email">_email:</label>
+              <label htmlFor="email">_seuEmail:</label>
               <input
                 type="text"
                 id="email"

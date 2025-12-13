@@ -189,11 +189,11 @@ function SideBarAbout({
   const isActive = (id: string) => activeFolders.includes(id);
 
   return (
-    <div ref={sidebarRef} className="flex flex-col h-auto md:max-h-full md:min-h-full text-primary w-full md:w-fit md:min-w-fit text-nowrap border-b border-b-gray md:border-b-0 select-none scroll-style md:overflow-y-auto md:border-r md:border-r-gray">
+    <div ref={sidebarRef} className="flex flex-col h-auto md:max-h-full md:min-h-full text-primary w-full md:w-fit md:min-w-fit text-nowrap border-b border-b-gray md:border-b-0 select-none scroll-style md:overflow-y-auto md:border-r md:border-r-gray p-2">
       {sections
         .map((section) =>
           section.folders.map((folder) => (
-            <div key={folder.id} className="pt-2 px-2">
+            <div key={folder.id} className="pt-1">
               <div
                 onClick={() => toggleFolder(folder.id)}
               >
@@ -210,12 +210,12 @@ function SideBarAbout({
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className="flex flex-col gap-1"
+                    className="flex flex-col ml-2 border-l border-gray py-1 gap-1"
                   >
                     {folder.children.map((child) => (
                       <div key={child.id}>
                         <div
-                          className="pl-6"
+                          className="pl-2"
                           onClick={() => toggleFolder(child.id)}
                         >
                           <FolderSideBar
@@ -232,7 +232,7 @@ function SideBarAbout({
                               animate={{ height: "auto", opacity: 1 }}
                               exit={{ height: 0, opacity: 0 }}
                               transition={{ duration: 0.2, ease: "easeInOut" }}
-                              className="pl-10 pr-2 flex flex-col gap-1"
+                              className="ml-4 flex flex-col gap-1 border-l border-gray"
                             >
                               {child.content}
                             </motion.div>
@@ -263,14 +263,14 @@ function SideBarAbout({
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="flex flex-col"
+            className="flex flex-col border-l border-gray ml-4"
           >
-            <div className="flex items-center ml-2 px-3 py-1 gap-1">
+            <div className="flex items-center pr-3 pl-2 pb-1 gap-1">
               <MdEmail fontSize={20} />
               <div onClick={copyEmail} className="text-sm cursor-pointer">adrianfachidev@gmail.com</div>
               <Toaster position="top-right" />
             </div>
-            <div className="flex items-center ml-2 px-3 py-1 gap-1">
+            <div className="flex items-center pr-3 pl-2 gap-1">
               <MdPhone fontSize={20} />
               <a href="https://wa.me/5551995105286" target="_blank" className="text-sm cursor-pointer">+55 51 996105286</a>
             </div>
