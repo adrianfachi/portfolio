@@ -5,9 +5,7 @@ import Link from "next/link";
 import { motion, Easing } from "framer-motion";
 
 function Apresentacion() {
-  // Configuração base da curva de easing (mantida)
   const ease: Easing = [0.4, 0, 0.2, 1];
-  // DURAÇÃO BASE REDUZIDA para 0.4s
   const duration = 0.4;
 
   return (
@@ -15,7 +13,6 @@ function Apresentacion() {
       className="flex flex-col gap-8 p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      // Duração da animação principal reduzida
       transition={{ duration: 0.4 }}
     >
       <div>
@@ -23,7 +20,6 @@ function Apresentacion() {
           className="text-xs"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          // DELAY REDUZIDO
           transition={{ duration, ease, delay: 0.05 }}
         >
           Olá, eu sou o
@@ -33,7 +29,6 @@ function Apresentacion() {
           className="text-white text-3xl md:text-4xl"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
-          // DELAY REDUZIDO
           transition={{ duration: 0.5, ease, delay: 0.15 }}
         >
           Adrian Fachi
@@ -43,7 +38,6 @@ function Apresentacion() {
           className="text-purple text-base md:text-xl"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          // DELAY REDUZIDO
           transition={{ duration: 0.5, ease, delay: 0.3 }}
         >
           &gt; Front-end developer
@@ -52,20 +46,9 @@ function Apresentacion() {
 
       <div className="text-xs">
 
-        {/* Adicionei a animação da linha de comentário "// para continuar..." que estava faltando, ajustando o delay */}
-        <motion.p
-          className="hidden md:flex"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration, ease, delay: 0.5 }} // Novo delay
-        >
-          // para continuar complete o jogo
-        </motion.p>
-
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          // DELAY REDUZIDO
           transition={{ duration, ease, delay: 0.6 }}
         >
           // meu perfil no github:
@@ -75,7 +58,6 @@ function Apresentacion() {
             className="text-purple"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            // DURAÇÃO E DELAY REDUZIDOS (Efeito "digitação")
             transition={{ duration: 0.2, delay: 0.7 }}
           >
             const{" "}
@@ -84,7 +66,6 @@ function Apresentacion() {
             className="text-green"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            // DURAÇÃO E DELAY REDUZIDOS
             transition={{ duration: 0.2, delay: 0.8 }}
           >
             gitHubLink{" "}
@@ -92,7 +73,6 @@ function Apresentacion() {
           <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            // DURAÇÃO E DELAY REDUZIDOS
             transition={{ duration: 0.2, delay: 0.9 }}
           >
             ={" "}
@@ -100,7 +80,6 @@ function Apresentacion() {
           <motion.div
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
-            // DELAY REDUZIDO
             transition={{ duration: 0.5, ease, delay: 1.0 }}
             style={{ display: 'inline-block' }}
           >

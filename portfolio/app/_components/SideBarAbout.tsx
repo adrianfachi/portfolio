@@ -272,7 +272,7 @@ function SideBarAbout({
             </div>
             <div className="flex items-center pr-3 pl-2 gap-1">
               <MdPhone fontSize={20} />
-              <a href="https://wa.me/5551995105286" target="_blank" className="text-sm cursor-pointer">+55 51 996105286</a>
+              <a href="https://wa.me/5551996105286" target="_blank" className="text-sm cursor-pointer">+55 51 996105286</a>
             </div>
           </motion.div>
         )}
