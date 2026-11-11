@@ -7,7 +7,7 @@ import {
   IoMdArrowDropright,
   IoMdArrowDropup,
 } from "react-icons/io";
-import { motion } from "framer-motion"; // AnimatePresence não é necessário, mas motion sim
+import { motion } from "framer-motion";
 
 type Position = {
   x: number;
@@ -72,7 +72,6 @@ function SnakeGame() {
     if (direction === "LEFT") head.x -= 1;
     if (direction === "RIGHT") head.x += 1;
 
-    // Checagem de Colisão
     if (
       head.x < 0 ||
       head.y < 0 ||
@@ -85,16 +84,15 @@ function SnakeGame() {
     }
 
     const newSnake = [head, ...snake];
-    setEatenFoodPosition(null); // Limpa a posição da comida a cada movimento
+    setEatenFoodPosition(null);
 
     if (head.x === food.x && head.y === food.y) {
-      // A cobra comeu
       setFoodAnimation({ x: food.x, y: food.y });
-      setEatenFoodPosition({ x: food.x, y: food.y }); // Guarda a posição para a animação do novo segmento
-      setFood(generateFood(newSnake)); // Gera nova comida
+      setEatenFoodPosition({ x: food.x, y: food.y });
+      setFood(generateFood(newSnake));
       setFoodEaten((prev) => prev + 1);
     } else {
-      newSnake.pop(); // Remove a cauda se não comeu
+      newSnake.pop();
     }
 
     setSnake(newSnake);
@@ -111,16 +109,15 @@ function SnakeGame() {
   }
 
   return (
-    // MODIFICADO: O div foi alterado para motion.div e as propriedades de animação foram adicionadas
+    
     <motion.div
-      initial={{ opacity: 0, x: 100 }} // Começa invisível e 100px para a direita
-      animate={{ opacity: 1, x: 0 }} // Anima para visível e na posição correta
-      transition={{ duration: 0.8, type: "spring", stiffness: 100, delay: 1 }} // Transição suave
+      initial={{ opacity: 0, x: 100 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.8, type: "spring", stiffness: 100, delay: 1 }}
       className="hidden items-center justify-center bg-gradient-to-br from-[#00d5c082] to-[#43D9AD13] lg:flex rounded-2xl m-4 min-h-fit h-fit media3"
     >
       <div className="flex space-x-6 p-6 rounded-2xl shadow-xl">
         <div className="bg-[#0a1a2a] rounded-xl shadow-lg relative z-2">
-          {/* O Seu layout original para Start/Game Over */}
           {!started ? (
             <button
               onClick={resetGame}
@@ -151,11 +148,10 @@ function SnakeGame() {
               pointerEvents: "none",
             }}
           >
-            {/* Animação da Comida (Mais vibrante) */}
             <motion.div
               animate={{
                 scale: [1, 1.25, 1],
-                rotate: [0, 15, -15, 0], // Adicionado rotação
+                rotate: [0, 15, -15, 0],
               }}
               transition={{
                 duration: 0.7,
@@ -172,7 +168,6 @@ function SnakeGame() {
               }}
             />
 
-            {/* Animação de Efeito de "Partícula" de Comida (Mais rápido) */}
             {foodAnimation && (
               <motion.div
                 initial={{
@@ -184,10 +179,10 @@ function SnakeGame() {
                 animate={{
                   scale: 0,
                   opacity: 0,
-                  y: -CELL_SIZE, // Animação para cima
+                  y: -CELL_SIZE,
                 }}
                 transition={{
-                  duration: 0.3, // Mais rápido
+                  duration: 0.3,
                   ease: "easeOut",
                 }}
                 className="absolute w-[15px] h-[15px] rounded-full bg-yellow-300 shadow-[0_0_6px_#facc15] pointer-events-none"
@@ -195,20 +190,17 @@ function SnakeGame() {
               />
             )}
 
-            {/* Renderização da Cobra com Animação de Crescimento */}
             {snake.map((seg, idx) => {
               const isHead = idx === 0;
               const isNewSegment = eatenFoodPosition && idx === 0;
 
               const alpha = 1 - (idx / (snake.length - 1)) * 0.2;
               const bg = `rgba(67,217,173)`;
-
-              // Define a posição inicial SOMENTE para o novo segmento
               const initialPos = isNewSegment
                 ? {
                   left: eatenFoodPosition.x * CELL_SIZE,
                   top: eatenFoodPosition.y * CELL_SIZE,
-                  scale: 0.1, // Começa bem pequeno
+                  scale: 0.1,
                   opacity: 0.5,
                 }
                 : {
@@ -224,7 +216,7 @@ function SnakeGame() {
                     left: seg.x * CELL_SIZE,
                     top: seg.y * CELL_SIZE,
                     opacity: alpha,
-                    scale: isHead ? 1.05 : 1, // Pequeno pulsar na cabeça
+                    scale: isHead ? 1.05 : 1,
                   }}
                   transition={{
                     type: "tween",
@@ -257,7 +249,6 @@ function SnakeGame() {
           </div>
         </div>
 
-        {/* Barra Lateral (Controles e Score) */}
         <div className="text-gray-200 font-mono space-y-6">
           <div>
             <p>// use as setas do</p>

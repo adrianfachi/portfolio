@@ -8,7 +8,6 @@ import TitleSideBar from "./TitleSideBar";
 import infoSideBar from "../_lib/infoSideBar";
 import FolderSideBar from "./FolderSideBar";
 import SideBarElementTxt from "./SideBarElementTxt";
-import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 
 type props = {

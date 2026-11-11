@@ -27,7 +27,7 @@ function Footer() {
         </div>
         <div className="flex">
           <Link
-            href={"ttps://github.com/adrianfachi"}
+            href={"https://github.com/adrianfachi"}
             target="_blank"
             className="px-4 h-8 flex items-center text-primary hover:text-purple transition"
           >
